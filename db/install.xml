@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/assmgr/db" VERSION="20111031" COMMENT="XMLDB file for Moodle blocks/assmgr"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_assmgr" COMMENT="Default table required by the block but not used." NEXT="block_assmgr_portfolio">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_portfolio" COMMENT="An assessment portfolio" PREVIOUS="block_assmgr" NEXT="block_assmgr_lock">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="candidate_id" NEXT="needsassess"/>
+        <FIELD NAME="needsassess" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="course_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="needsassess" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_course_portfolio"/>
+        <KEY NAME="unique_course_portfolio" TYPE="unique" FIELDS="candidate_id, course_id" PREVIOUS="primary" NEXT="valid_portfolio_user"/>
+        <KEY NAME="valid_portfolio_user" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="unique_course_portfolio" NEXT="valid_portfolio_course"/>
+        <KEY NAME="valid_portfolio_course" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="valid_portfolio_user"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_lock" COMMENT="Locks protfolios so no one else may enter them" PREVIOUS="block_assmgr_portfolio" NEXT="block_assmgr_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="portfolio_id"/>
+        <FIELD NAME="portfolio_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="portfolio_id" NEXT="expire"/>
+        <FIELD NAME="expire" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="creator_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="expire" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_lock_user"/>
+        <KEY NAME="valid_lock_user" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_unique_lock_portfolio"/>
+        <KEY NAME="valid_unique_lock_portfolio" TYPE="foreign-unique" FIELDS="portfolio_id" REFTABLE="block_assmgr_portfolio" REFFIELDS="id" PREVIOUS="valid_lock_user"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_log" COMMENT="holds log information" PREVIOUS="block_assmgr_lock">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="creator_id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="candidate_id" NEXT="type"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="course_id" NEXT="entity"/>
+        <FIELD NAME="entity" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="type" NEXT="record_id"/>
+        <FIELD NAME="record_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="entity" NEXT="attribute"/>
+        <FIELD NAME="attribute" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="record_id" NEXT="old_value"/>
+        <FIELD NAME="old_value" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="attribute" NEXT="new_value"/>
+        <FIELD NAME="new_value" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="old_value" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="new_value" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="creator_id_fk"/>
+        <KEY NAME="creator_id_fk" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="candidate_id_fk"/>
+        <KEY NAME="candidate_id_fk" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="creator_id_fk" NEXT="course_id_fk"/>
+        <KEY NAME="course_id_fk" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="candidate_id_fk"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

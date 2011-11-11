@@ -1,0 +1,34 @@
+<?php
+// register the form with the unsaved data checker
+if ($access_isassessor) {
+    $PAGE->requires->js('/lib/yui/2.8.2/build/yahoo/yahoo-min.js');
+    $PAGE->requires->js('/lib/yui/2.8.2/build/selector/selector.js');
+    $PAGE->requires->js('/lib/yui/2.8.2/build/event/event-min.js');
+    $PAGE->requires->js('/blocks/assmgr/views/js/yui/2.8.1/build/event-delegate/event-delegate.js');
+
+
+    // Add listener to checkboxes
+    $unsavedmodule = array(
+        'name'      => 'view_submissions',
+        'fullpath'  => '/blocks/assmgr/views/js/view_submissions.js',
+        'requires'  => array('yui_dom')
+    );
+    $PAGE->requires->js_init_call('M.assmgr.view_submissions.init', array(''), true, $unsavedmodule);
+	$PAGE->requires->js_init_call('M.assmgr.view_submissions.hidecolumns', array(''), true, $unsavedmodule);
+
+
+
+}
+?>
+<h2 id="submittedevidence" class="headingblock header">
+    <?php echo get_string(($access_isassessor ? 'yourunittracking' : 'myunittracking'), 'block_assmgr', $course->fullname);?>
+    <?php //$OUTPUT->help_icon('submittedevidence',  'block_assmgr', get_string('submittedevidence', 'block_assmgr')); ?>
+</h2>
+<div id="submittedevidence_container" class="box generalbox toggledcontainer">
+    <div id="submissions_table_container" class="portcontainer grade-report-grader">
+        <?php
+	  // display the submission table
+       echo $renderer->render($courseactiviites);
+        ?>
+    </div>
+</div>

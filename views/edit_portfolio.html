@@ -1,0 +1,60 @@
+<?php
+// include standard libraries
+$PAGE->requires->js('/lib/yui/2.8.2/build/yahoo/yahoo-min.js');
+$PAGE->requires->js('/lib/yui/2.8.2/build/event/event-min.js');
+$PAGE->requires->js('/lib/yui/2.8.2/build/dom/dom-min.js');
+$PAGE->requires->js('/lib/yui/2.8.2/build/animation/animation-min.js');
+$PAGE->requires->js('/lib/yui/2.8.2/build/container/container-min.js');
+
+// include the assmgr custom library
+$PAGE->requires->js('/blocks/assmgr/views/js/lib.js');
+
+// load the standard YUI style sheet
+$PAGE->requires->css_theme(new moodle_url($CFG->wwwroot.'/lib/yui/container/assets/container.css'));
+
+echo $OUTPUT->header();
+
+// load custom javascript
+$module = array(
+    'name'      => 'edit_portfolio',
+    'fullpath'  => '/blocks/assmgr/views/js/animate_accordions.js',
+    'requires'  => array('yui-yahoo','yui2-dom', 'yui2-event', 'yui2-connection', 'yui2-container', 'yui2-animation')
+
+);
+
+
+// js arguments
+$jsarguments = array(
+    'open_image'   =>   $CFG->wwwroot.'/theme/image.php?theme=custom&image=t%2Fswitch_plus&rev=229',
+    'closed_image' => 	$CFG->wwwroot.'/theme/image.php?theme=custom&image=t%2Fswitch_minus&rev=229'
+);
+
+// initialise the js for the page
+$PAGE->requires->js_init_call('M.blocks_assmgr_animate_accordions.init', $jsarguments, true, $module);
+
+?>
+<div class="assmgr yui-skin-sam">
+    <div id="assmgrdragdiv"></div>
+    <?php
+    echo $OUTPUT->heading($page_heading);
+
+    // include the units' progress window
+    require_once($CFG->dirroot.'/blocks/assmgr/actions/view_units_progress.php');
+
+
+    // show the submission matrix table
+    require_once($CFG->dirroot.'/blocks/assmgr/actions/view_submissions.php');
+
+    // show the final assessment form
+    if($access_isassessor ) {
+        require_once($CFG->dirroot.'/blocks/assmgr/actions/edit_portfolio_assessment.php');
+    }
+/*
+    // show the submission matrix table
+    require_once($CFG->dirroot.'/blocks/assmgr/actions/view_log.php');
+*/
+    ?>
+</div>
+<?php
+echo $OUTPUT->footer();
+?>

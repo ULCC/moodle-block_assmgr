@@ -1,0 +1,40 @@
+<?php
+/**
+ * Instance config file for the Assessment Manager.
+ *
+ * @copyright &copy; 2009-2010 University of London Computer Centre
+ * @author http://www.ulcc.ac.uk, http://moodle.ulcc.ac.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package AssMgr
+ * @version 1.0
+ */
+global $CFG;
+
+// include the moodle forms lib
+require_once("{$CFG->dirroot}/lib/formslib.php");
+
+if(!class_exists('block_edit_form')) {
+
+    // create the base class that doens't exist in version 1.x
+    class block_edit_form extends moodleform {
+
+        function definition() {
+            $mform =& $this->_form;
+            $this->specific_definition($mform);
+            $this->add_action_buttons();
+        }
+    }
+}
+
+// include the moodle 2.x form for editing this block instance
+require_once("{$CFG->dirroot}/blocks/assmgr/edit_form.php");
+
+// instantiate the form
+$mform = new block_assmgr_edit_form();
+
+// load the existing config data into the form
+$mform->set_data($this->config);
+
+// render the form
+$mform->display();
+?>

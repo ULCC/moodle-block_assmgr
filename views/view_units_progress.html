@@ -1,0 +1,66 @@
+<h2 id="unitssection" class="headingblock header">
+    <?php echo get_string(($access_isassessor ? 'yourprogress' : 'myprogress'), 'block_assmgr', $coursecat->name);?>
+    <?php //$OUTPUT->help_icon('unitssection',  'block_assmgr', get_string('unitssection', 'block_assmgr')); ?>
+</h2>
+<div id="unitssection_container" class="box generalbox toggledcontainer" >
+    <?php
+    $cols = 2; ?>
+    <table class="generaltable enrolledunits" cellpadding="3">
+        <tr>
+            <th colspan="<?php echo $cols; ?>" class="header">
+                <?php
+                echo get_string('enrolledunits', 'block_assmgr');
+
+				//$OUTPUT->help_icon('enrolledunits',  'block_assmgr', get_string('enrolledunits', 'block_assmgr'));
+                ?>
+            </th>
+        </tr>
+        <?php
+
+        foreach ($courses as $index => $course) {
+           $block_instance = $dbc->get_block_course_ids($course->id);
+           if (empty($block_instance)) {
+                unset($courses[$index]);
+            }
+        }
+
+        $i = 0;
+        foreach ($courses as $othercourse) {
+            if($i%$cols == 0) {
+                echo '<tr>';
+            }
+
+            // get the course portfolio grade
+            //$portgrade = $dbc->get_portfolio_grade($othercourse->id, $candidate_id);
+            $finalgrade = !empty($portgrade->grade) ? $portgrade->str_grade : '';
+
+            // is this the currently active unit
+            $current = (bool)($course_id == $othercourse->id);
+            ?>
+            <td class="<?php echo ($current) ? 'highlight' : 'cell'; ?>">
+                <?php
+                if ($current) {
+                    echo limit_length($othercourse->shortname, 50, $othercourse->fullname);
+                } else { ?>
+                    <a href="<?php echo $CFG->wwwroot; ?>/blocks/assmgr/actions/edit_portfolio.php?course_id=<?php echo $othercourse->id; ?>&amp;candidate_id=<?php echo $candidate_id; ?>#submittedevidence">
+                        <?php echo limit_length($othercourse->shortname, 50, $othercourse->fullname); ?>
+                    </a>
+                    <?php
+                }?>
+
+                <?php echo $progress->get_unit_progress($candidate_id, $othercourse->id, $access_isassessor, 'small'); ?>
+                <div class='gradetext' ><?php echo  (!empty($finalgrade)) ? get_string('grade','block_assmgr').':'.$finalgrade : ''; ?> &nbsp;</div>
+            </td>
+            <?php
+            $i++;
+            if($i%$cols == 0) {
+                echo '</tr>';
+            }
+        }
+        // add an extra closing tag, if necessary
+        if($i%$cols != 0) {
+            echo '</tr>';
+        } ?>
+    </table>
+ 
+</div>

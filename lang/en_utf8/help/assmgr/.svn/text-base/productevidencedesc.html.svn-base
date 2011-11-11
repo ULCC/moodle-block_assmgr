@@ -1,0 +1,2 @@
+<b><?php echo get_string('productevidence', 'block_assmgr'); ?></b>
+<p><?php echo get_string('productevidencedesc', 'block_assmgr'); ?></p>

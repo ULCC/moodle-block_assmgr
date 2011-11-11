@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/tables
+END
+assmgr_ajax_table.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/tables/assmgr_ajax_table.class.php
+END
+assmgr_tablelib.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/tables/assmgr_tablelib.class.php
+END
+assmgr_submission_table.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/tables/assmgr_submission_table.class.php
+END
+assmgr_log_table.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/tables/assmgr_log_table.class.php
+END

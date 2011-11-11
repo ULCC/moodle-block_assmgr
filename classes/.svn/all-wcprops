@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes
+END
+assmgr_formslib.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_formslib.php
+END
+assmgr_parser.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_parser.class.php
+END
+assmgr_web_capture.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_web_capture.class.php
+END
+assmgr_logging.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_logging.class.php
+END
+assmgr_scale.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_scale.class.php
+END
+assmgr_progress_bar.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/classes/assmgr_progress_bar.class.php
+END

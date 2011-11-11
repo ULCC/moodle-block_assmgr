@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions
+END
+view_submissions.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_submissions.ajax.php
+END
+view_verification_portfolios.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_verification_portfolios.php
+END
+view_verification_submissions.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_verification_submissions.ajax.php
+END
+delete_folder.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/delete_folder.php
+END
+edit_confirmation.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_confirmation.php
+END
+view_log.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_log.ajax.php
+END
+list_portfolio_assessments.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_portfolio_assessments.php
+END
+edit_submission.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_submission.php
+END
+edit_assess_date.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_assess_date.php
+END
+save_confirmation.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/save_confirmation.php
+END
+list_moodle_assignments.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_moodle_assignments.ajax.php
+END
+edit_portfolio_verification_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_portfolio_verification_form.php
+END
+view_submissions.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_submissions.php
+END
+save_submission.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/save_submission.php
+END
+view_verification_submissions.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_verification_submissions.php
+END
+view_evidence_folders.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_evidence_folders.ajax.php
+END
+view_evidence.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_evidence.php
+END
+view_verification.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_verification.php
+END
+save_submission_visibility.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/save_submission_visibility.php
+END
+delete_assess_date.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/delete_assess_date.php
+END
+edit_folder.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_folder.php
+END
+save_outcomes_assessment.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/save_outcomes_assessment.php
+END
+list_verifications.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_verifications.ajax.php
+END
+edit_portfolio.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_portfolio.php
+END
+list_unconfirmed.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_unconfirmed.ajax.php
+END
+edit_portfolio_assessment.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_portfolio_assessment.php
+END
+view_evidence_folders.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_evidence_folders.php
+END
+edit_verify_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_verify_form.php
+END
+list_assess_dates.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_assess_dates.ajax.php
+END
+list_verifications.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_verifications.php
+END
+list_unconfirmed.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_unconfirmed.php
+END
+delete_evidence.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/delete_evidence.php
+END
+view_log.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_log.php
+END
+list_assess_dates.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_assess_dates.php
+END
+delete_submission.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/delete_submission.php
+END
+view_verification_portfolios.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_verification_portfolios.ajax.php
+END
+edit_verification_completion.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_verification_completion.php
+END
+view_units_progress.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/ulcc/!svn/ver/2795/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/view_units_progress.php
+END
+list_portfolio_assessments.ajax.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/list_portfolio_assessments.ajax.php
+END
+lock_portfolio.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/lock_portfolio.php
+END
+edit_evidence.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_evidence.php
+END
+edit_verification.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ulcc/!svn/ver/2798/assmoodle1/branches/Release%202.0/docroot/blocks/assmgr/actions/edit_verification.php
+END

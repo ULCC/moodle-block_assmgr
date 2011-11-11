@@ -1,0 +1,30 @@
+<?php
+// include standard libraries
+$PAGE->requires->js('/lib/yui/yahoo/yahoo-min.js');
+$PAGE->requires->js('/lib/yui/event/event-min.js');
+$PAGE->requires->js('/lib/yui/dom/dom-min.js');
+$PAGE->requires->js('/lib/yui/animation/animation-min.js');
+$PAGE->requires->js('/lib/yui/container/container-min.js');
+
+// include the assmgr custom library
+$PAGE->requires->js('/blocks/assmgr/views/js/lib.js');
+
+// load the standard YUI style sheet
+$PAGE->requires->css_theme(new moodle_url($CFG->wwwroot.'/lib/yui/container/assets/container.css'));
+
+echo $OUTPUT->header();
+?>
+<div class="assmgr yui-skin-sam">
+    <?php echo $OUTPUT->heading(get_string('listverifications', 'block_assmgr')); ?>
+    <div id="assmgr_verifications_container">
+        <?php
+        // display the table
+        require_once($CFG->dirroot.'/blocks/assmgr/actions/list_verifications.ajax.php');
+        ?>
+    </div>
+    <?php
+    $editstr = get_string('createverification', 'block_assmgr');
+    $editurl = $CFG->wwwroot.'/blocks/assmgr/actions/edit_verification.php?course_id='.$course_id;
+    echo $OUTPUT->heading("<a href='{$editurl}'>{$editstr}</a>");
+    ?>
+</div>

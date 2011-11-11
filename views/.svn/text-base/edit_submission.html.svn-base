@@ -1,0 +1,70 @@
+<?php
+// include standard libraries
+$PAGE->requires->js('/lib/yui/yahoo/yahoo-min.js');
+$PAGE->requires->js('/lib/yui/event/event-min.js');
+$PAGE->requires->js('/lib/yui/dom/dom-min.js');
+$PAGE->requires->js('/lib/yui/animation/animation-min.js');
+$PAGE->requires->js('/lib/yui/container/container-min.js');
+
+// include the assmgr custom library
+$PAGE->requires->js('/blocks/assmgr/views/js/lib.js');
+
+// load the standard YUI style sheet
+$PAGE->requires->css_theme(new moodle_url($CFG->wwwroot.'/lib/yui/container/assets/container.css'));
+
+echo $OUTPUT->header();
+
+// Lock portfolio ajax stuff
+$lockmodule = array(
+        'name'      => 'lock_portfolio',
+        'fullpath'  => '/blocks/assmgr/views/js/lock_portfolio.js',
+        'requires'  => array('yui2-connection', 'yui2-dom')
+);
+$lockargs = array('course_id' => $course_id, 'candidate_id' => $candidate_id, 'wwwroot' => $CFG->wwwroot);
+$PAGE->requires->js_init_call('M.assmgr.lock_portfolio.assmgr_lock_init', $lockargs, true, $lockmodule);
+
+// add the javascript to make sure unsaved changes are flagged
+$unsavedmodule = array(
+        'name'      => 'unsaved_data',
+        'fullpath'  => '/blocks/assmgr/views/js/unsaved_data.js',
+        'requires'  => array()
+);
+$formsaveargs = array('form' => 'mform1', 'tablename' => get_string('thisform', 'block_assmgr'));
+$PAGE->requires->js_init_call('M.blocks_assmgr_unsaved_data.checker.subscribe_to_form', $formsaveargs, true, $unsavedmodule);
+?>
+<div class="assmgr yui-skin-sam">
+    <?php
+    // render the page heading
+    echo $OUTPUT->heading($typeHeader);
+    if ($access_isverifier) {
+        $fieldsettitle = get_string('assessment', 'block_assmgr'); ?>
+        <fieldset id="assessmentfieldset" class="clearfix assmgrfieldset">
+        <legend class="ftoggler"><?php echo $fieldsettitle ?></legend>
+    <?php }
+
+    $mform->display();
+
+    if ($access_isverifier) {
+    ?>
+        </fieldset>
+    <?php
+
+        require_once($CFG->dirroot.'/blocks/assmgr/actions/edit_verify_form.php');
+    }
+    ?>
+
+        <div class="mform">
+        <fieldset id="assmgr_log_fieldset" class="clearfix">
+            <legend class="ftoggler"><?php echo get_string('actionslog', 'block_assmgr');?></legend>
+            <div id="assmgr_log_submissioncourse_id<?php echo $course_id;?>candidate_id<?php echo $candidate_id;?>_container">
+                <?php
+                if (!empty($submission_id)) {
+                    require_once($CFG->dirroot.'/blocks/assmgr/actions/view_log.ajax.php');
+                } ?>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<?php
+echo $OUTPUT->footer();
+?>

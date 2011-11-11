@@ -1,0 +1,56 @@
+<?php
+// include standard libraries
+$PAGE->requires->js('/lib/yui/yahoo/yahoo-min.js');
+$PAGE->requires->js('/lib/yui/event/event-min.js');
+$PAGE->requires->js('/lib/yui/dom/dom-min.js');
+$PAGE->requires->js('/lib/yui/animation/animation-min.js');
+$PAGE->requires->js('/lib/yui/container/container-min.js');
+
+// include the assmgr custom library
+$PAGE->requires->js('/blocks/assmgr/views/js/lib.js');
+
+// load the standard YUI style sheet
+$PAGE->requires->css_theme(new moodle_url($CFG->wwwroot.'/lib/yui/container/assets/container.css'));
+
+// setup the page title and heading
+$PAGE->title = $course->shortname.': '.get_string('blockname','block_assmgr');
+$PAGE->set_heading($course->fullname);
+$PAGE->set_navigation = assmgr_build_navigation($navlinks);
+$PAGE->set_url('/blocks/assmgr/actions/edit_evidence.php', $PARSER->get_params());
+
+echo $OUTPUT->header();
+
+// add the javascript to make sure unsaved changes are flagged
+$unsavedmodule = array(
+        'name'      => 'unsaved_data',
+        'fullpath'  => '/blocks/assmgr/views/js/unsaved_data.js',
+        'requires'  => array()
+);
+$formsaveargs = array('form' => 'mform1', 'tablename' => get_string('thisform', 'block_assmgr'));
+$PAGE->requires->js_init_call('M.blocks_assmgr_unsaved_data.checker.subscribe_to_form', $formsaveargs, true, $unsavedmodule);
+?>
+<div class="assmgr yui-skin-sam">
+    <?php
+    // render the page heading
+    echo $OUTPUT->heading($typeHeader);
+
+    // render the form
+    $evidclass->mform->display();
+
+
+    if (!empty($evidence_id)) {
+    ?>
+    <div class="mform">
+        <fieldset id="assmgr_log_fieldset" class="clearfix">
+            <legend class="ftoggler"><?php echo get_string('actionslog', 'block_assmgr');?></legend>
+            <div id="assmgr_log_evidencecourse_id<?php echo $course_id;?>candidate_id<?php echo $candidate_id;?>_container">
+                <?php require_once($CFG->dirroot.'/blocks/assmgr/actions/view_log.ajax.php'); ?>
+            </div>
+        </fieldset>
+    </div>
+    <?php }
+    ?>
+</div>
+<?php
+echo $OUTPUT->footer();
+?>

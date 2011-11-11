@@ -1,0 +1,661 @@
+/**
+ * Styles for the Assessment Manager
+ *
+ * @copyright &copy; 2009-2010 University of London Computer Centre
+ * @author http://www.ulcc.ac.uk, http://moodle.ulcc.ac.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package AssMgr
+ * @version 1.0
+ */
+.assmgr h2 {
+    clear           : both;
+}
+
+#content div.assmgr {
+}
+	
+.assmgr .fit {
+    width           : 100%;
+    clear           : both;
+}
+
+assmgr .gradetext {
+    text-align      : center;
+}
+
+.assmgr .progress_bar_cell {
+	padding         : 3px;
+    text-align      : center; 
+}
+
+.assmgr .progress_bar_cell .progress_bar_small {
+    margin          : 0 auto; 
+}
+
+.assmgr .progress_bar_small {
+    width           : 150px;
+    height          : 15px;
+    border          : 1px solid #000000;
+    background-color: #FFFFFF;
+    overflow        : hidden;
+    display         : block;
+}
+
+.assmgr .progress_bar_big {
+    width           : 200px;
+    height          : 20px;
+    border          : 1px solid #000000;
+    background-color: #FFFFFF;
+    overflow        : hidden;
+    display         : block;
+}
+
+.assmgr .progress_bar_small .bar_avg,
+.assmgr .progress_bar_big .bar_avg {
+    border          : 0 none;
+    height          : 100%;
+    float           : left;
+    display         : block;
+}
+
+.assmgr .progress_bar_big .assessed,
+.assmgr .progress_bar_small .assessed {
+    background-color: #80C65A;
+    text-align      : center;
+    vertical-align  : middle;
+    font-size       : 70%;
+}
+
+.assmgr .progress_bar_big .incomplete,
+.assmgr .progress_bar_small .incomplete {
+    background-color: #EBC4BD;
+}
+
+.assmgr .progress_bar_big .claims,
+.assmgr .progress_bar_small .claims {
+    background-color: #4D89F9;
+}
+
+.assmgr .headingblock {
+    margin-bottom   : 9px;
+    clear           : both;
+}
+
+.assmgr .overallprogress {
+	float           : left;
+    width           : 49.5%;	
+}
+
+.assmgr .enrolledunits {
+    float           : right;
+    width           : 49.5%;
+}
+
+.assmgr .enrolledunits .progress_bar_small {
+    float           : right;   
+}
+
+.assmgr .optiontable {
+	margin          : 0 auto;
+	width           : auto;
+}
+
+.assmgr .filters {
+    float           : left;
+    margin          : 5px 5px 5px 0px;
+}
+
+.assmgr .filters td {
+    margin          : 10px 0 0 0;
+    white-space     : nowrap;
+    padding         : 2px;
+    vertical-align  : middle;
+    text-align      : left;
+}
+
+.assmgr .filters input,
+.assmgr .filters label {
+    display         : inline;
+    width           : auto;
+    float           : none;
+    border          : none;
+}
+
+.assmgr .filters fieldset {
+    width           : 300px;	
+}
+
+.assmgr .filters fieldset,
+.assmgr .filters legend {
+    border : none;
+    padding : 0;
+    margin : 0;
+    float: left;
+    background : transparent;
+}
+
+.assmgr .filters fieldset span {
+	display         : block;
+	float           : left;
+	width           : 70px;
+}
+
+.assmgr .filters fieldset ledgend {
+    background : transparent;
+}
+
+.assmgr .keyholder{
+    float           : right;
+    margin-right    : 10px;
+}
+.assmgr .key ul{
+    margin          : 0;
+    white-space     : nowrap;
+    padding         : 0;
+}
+.assmgr .key li{
+    display         : inline;
+    list-style-type : none;
+    margin-left     : 5px;
+    border          : 1px solid #CCCCCC;
+}
+
+.assmgr .key li span {
+    padding         : 2px;
+}
+
+.assmgr .grade-report-grader table#user-grades {
+    width           : 100%;
+    clear           : both;
+    margin          : 0;
+}
+
+.assmgr .grade-report-grader table#user-grades td, 
+.assmgr .grade-report-grader table#user-grades th {
+    text-align      : center;
+}
+
+.assmgr .grade-report-grader table#user-grades td.leftalign,
+.assmgr .grade-report-grader table#user-grades th.leftalign {
+    text-align      : left;
+}
+
+.assmgr .grade-report-grader table#user-grades td.paging {
+    text-align      : center;
+}
+
+.assmgr .paging {
+    clear           : both;
+    text-align      : center; 
+}
+
+.assmgr .paging p,
+.assmgr .paging form {
+    display         : inline;	
+}
+
+.assmgr .dimmed_text img.tick,
+.assmgr .dimmed_text img.activityicon {
+    opacity         : 0.3;
+}
+
+.assmgr .grade-report-grader table#user-grades tr td.cell,
+.assmgr .grade-report-grader table#user-grades tr td.cell a,
+.assmgr .grade-report-grader table#user-grades tr td.cell a span {
+    white-space     : normal !important;
+    font-size       : 12px;  
+}
+
+.assmgr .gradepass {
+    color           : #298721;
+    background-color: #C2EBBD;
+}
+
+.assmgr .gradefail {
+    color           : #890D0D;
+    background-color: #EBC4BD;
+}
+
+.assmgr .gradeclaim {
+    color           : #00008B;
+}
+
+.assmgr .toggledcontainer {
+    background      : #FFFFFF;
+    overflow        : visible;
+}
+
+.hideaccordion .assmgr .toggledcontainer {
+	visibility      : hidden;
+	position        : absolute;
+	left            : -10000px;
+	top             : -10000px;
+}
+
+.assmgr .grade-report-grader table#user-grades th.headerrow  {
+    text-align      : center;	
+}
+
+.assmgr .grade-report-grader table#user-grades tr.odd td.cell,
+.assmgr .grade-report-grader table#user-grades tr.even td.cell {
+    font-size       : 12px;
+}
+
+.assmgr .grade-report-grader table#user-grades th.category {
+    border-color    : #EEEEEE;
+    color           : #000;
+    font-size       : 12px;
+}
+
+.assmgr .grade-report-grader table#user-grades th.item,
+.assmgr .grade-report-grader table#user-grades th.categoryitem,
+.assmgr .grade-report-grader table#user-grades th.courseitem  {
+    border-color    : #EEEEEE #EEEEEE #000000;
+    color           : #000;
+    font-size       : 12px;
+}
+
+.assmgr .filters td,
+.assmgr label {
+    font-weight     : bold;
+    font-size       : 12px;
+}
+
+.assmgr .filters .right select{
+       float            : left;	  
+}
+
+/*Tweaks so that fieldsets can be nested for the verification form */
+.assmgr fieldset.assmgrfieldset  {
+    padding         : 0 30px;
+    margin          : 50px 0;
+}
+
+.assmgr table.assmgrevidence td {
+    padding         : 0 0 0 30px;
+}
+/* styles to make the edit_submissions nested fieldsets work */
+.assmgr fieldset {
+    padding         : 10px;
+    border          : 1px solid #DDDDDD;
+    margin          : 0.7em 0;
+}
+.assmgr fieldset#assessmentfieldset {
+    width           : 80%;
+    margin          : auto;
+    padding         : 10px 20px;
+}
+.assmgr fieldset#assessmentfieldset fieldset {
+    width           : 98%;
+    margin          : 10px auto;
+}
+.assmgr #assessmentfieldset form {
+    width           : 98%;
+}
+.assmgr legend {
+    font-weight     : bold;
+    margin-left     : 0.5em;
+}
+.assmgr fieldset.assmgrfieldset p.assmgrevidencetitle {
+    font-weight     : bold;
+}
+
+/* Evidence table styles */
+.assmgr .create_evidence {
+    float           : right;
+    clear           : both;
+    margin-bottom   : 10px;
+}
+.assmgr #evidencefolders_container .iconhelp {
+    margin-left     : 5px;
+    margin-bottom   : 3px;
+}
+.assmgr #evidencefolders_container ul.yui-nav {
+    border          : none;
+}
+.assmgr #evidenceTab .yui-content {
+    border          : none;
+    background      : #fff;
+}
+
+.assmgr #evidenceTab .yui-content, 
+#evidenceTab .allocated_space_status {
+    float           : left;
+    clear           : both;
+}
+.assmgr #evidenceTab .allocated_space_status {
+    width           : 100%;
+}
+
+.assmgr #evidenceTab .allocated_space_status p {
+	margin         : 15px 0;
+}
+
+.assmgr #evidenceTab {
+    height          : 100%;
+    width           : 100%;
+    border-right    : solid 1px #ddd;
+    margin-right    : -1px;
+}
+.assmgr #evidenceTab {
+    float           : left;
+   
+    width           : 28%;
+}
+.assmgr .evidencewrapper {
+    float           : left;
+    padding         : 0 0 0 20px;
+    width           : 68%;
+    border-left     : solid 1px #ddd;
+}
+
+.assmgr #evidenceTree li {
+    list-style:square inside url("<?php echo $CFG->wwwroot; ?>/pix/i/open.gif");
+}
+
+.assmgr #evidenceClear {
+    clear           : both;
+}
+.assmgr .unitprogress {
+    float           : right;
+    font-weight     : bold;
+}
+
+.assmgr .ygtvcontent  {
+    width           : 280px;
+}
+
+.assmgr .ygtvspacer {
+    outline         : none;	
+}
+
+.assmgr .commands a {
+    width           : 15px;
+    height          : 15px;
+}
+.assmgr .commands img {
+    margin-left     : 5px;
+}
+.assmgr .MoveBtn {
+    cursor          : move;
+}
+.assmgr .activities {
+    width           : 100%;
+}
+
+.assmgr table#evidencetypes {
+    width           : 95%;
+    margin          : 0 auto;
+}
+
+.assmgr table#evidencetypes .fitem {
+	width           : auto;
+}
+
+.assmgr table#submissionoutcomes tr.even, .assmgr table#evidencetypes tr.even {
+    background-color: #eeeeee;
+}
+.assmgr table#evidencetypes .fcheckbox  {
+   width            : 60px;
+   float            : right;
+}
+.assmgr table#submissionoutcomes .fselect {
+    padding-right   : 10px;
+}
+
+.assmgr .headingblock .collapse {
+    padding-right   : 5px;	
+}
+
+/******************************************************************************/
+/**                         FOLDER SYTLES                                    **/
+/******************************************************************************/
+
+.assmgr .ygtvtn {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/tn.gif) 0 0 no-repeat;
+    width: 17px;
+    height: 22px;
+}
+
+.assmgr .ygtvtm {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/tm.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvtmh {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/tmh.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvtp {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/tp.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvtph {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/tph.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvln {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/ln.gif) 0 0 no-repeat;
+    width: 17px;
+    height: 22px;
+}
+
+.assmgr .ygtvlm {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lm.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvlmh {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lmh.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvlp {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lp.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvlph {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lph.gif) 0 0 no-repeat;
+    width: 34px;
+    height: 22px;
+    cursor: pointer
+}
+
+.assmgr .ygtvloading {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/loading.gif) 0 0 no-repeat;
+    width: 16px;
+    height: 22px;
+}
+
+.assmgr .ygtvdepthcell {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/vline.gif) 0 0 no-repeat;
+    width: 17px;
+    height: 22px;
+}
+
+.assmgr .ygtvblankdepthcell {
+    width: 17px;
+    height: 22px;
+}
+
+.assmgr .ygtvitem  table {
+    margin-bottom: 0;
+}
+
+.assmgr .ygtvitem  td {
+    border: none;
+    padding: 0;
+}
+
+* html .assmgr .ygtvchildren {
+    height: 1%;
+}
+
+.assmgr .ygtvlabel,
+.assmgr .ygtvlabel:link,
+.assmgr .ygtvlabel:visited,
+.assmgr .ygtvlabel:hover {
+    margin-left: 2px;
+    text-decoration: none;
+}
+
+.assmgr_tree_folder_close {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lfclose.gif) -2px -2px no-repeat;
+    padding-left: 23px;
+    margin-left: -4px;
+}
+
+.assmgr_tree_folder_open {
+    background: url(<?php echo $CFG->wwwroot; ?>/blocks/assmgr/pix/tree/folders/lfopen.gif) -2px -2px no-repeat;
+    padding-left: 23px;
+    margin-left: -6px;
+}
+
+/******************************************************************************/
+
+
+.assmgr span.nothidden {
+    display             : inline;
+}
+.assmgr .assmgroutcomediv div {
+    float               : left;
+}
+.assmgr span.hidden, .assmgr img.hidden  {
+    display             : none;
+}
+.assmgr .editicon {
+    cursor              : pointer;
+}
+.assmgr table.removeborder, .assmgr table.removeborder td {
+     border-style       : none;
+     border-width       : 0px;
+}
+.assmgr .grade-report-grader table#user-grades th.removetopborder {
+    border-top-style    : none;
+}
+.assmgr .grade-report-grader table#user-grades th.removebottomborder {
+    border-bottom-style : none;
+}
+.assmgr .greyed_out_icon {
+    opacity             : 0.2;
+    filter              : alpha(opacity=20);
+}
+
+.assmgr #assmgr_assessments_container .mform {
+    margin              :0;
+}
+
+.assmgr #assmgr_assessments_container .fitemtitle {
+    width               : 100px;
+}
+
+.assmgr .initialbar {
+    clear               : both;
+}
+
+.blocks-assmgr-actions .yui-tt {
+    max-width           : 600px;
+}
+
+.assmgr .groupselector {
+    clear               : both;
+}
+
+.assmgr .highlight {
+    background-color    : #FFFF00;
+}
+
+.assmgr #users_fieldset div {
+    display             : inline;	
+}
+
+.assmgr form p {
+    margin : 0px;
+}
+
+.assmgr #users_fieldset {
+    margin-left         : 10px;
+}
+
+.assmgr .tooltip * {
+    padding             : 0;
+    margin              : 0;
+}
+
+.assmgr .gradetext {
+    float               : right;
+    font-size           : 80%;
+}
+
+
+
+
+.assmgr table#user-grades td.hmarked {
+background-color:#ff9;
+}
+
+.assmgr table#user-grades td.vmarked {
+background-color:#fc9;
+}
+
+
+
+
+
+
+
+
+/************************
+Assmgr 2.5 specific styles
+*************************/
+
+
+.assmgr #container {width:605px}
+.assmgr table#new_activitynametable {
+  width:300px;
+  background:#ffffcc;
+  float:left;
+}
+.assmgr table#new_activityoutcometable {
+  background:#ffffcc;
+  width:900px;  
+}
+
+#new_activityoutcometable td {width:100px;}
+#new_activitywrap{
+  width:500px;
+  overflow:auto;
+  overflow-y:hidden;
+    float:left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

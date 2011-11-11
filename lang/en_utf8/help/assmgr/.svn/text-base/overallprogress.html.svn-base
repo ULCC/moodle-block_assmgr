@@ -1,0 +1,2 @@
+<b><?php echo get_string('overallprogress', 'block_assmgr'); ?></b>
+<p><?php echo get_string('overallprogresshelp', 'block_assmgr'); ?></p>

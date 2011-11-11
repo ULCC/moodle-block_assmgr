@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/assmgr/db" VERSION="20100804" COMMENT="XMLDB file for Moodle blocks/assmgr"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_assmgr" COMMENT="Default table required by the block but not used." NEXT="block_assmgr_evidence_type">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_evidence_type" COMMENT="evidence type" PREVIOUS="block_assmgr" NEXT="block_assmgr_folder">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="description" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_evidence_type_name"/>
+        <KEY NAME="unique_evidence_type_name" TYPE="unique" FIELDS="name" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_folder" COMMENT="Holds information on user folders" PREVIOUS="block_assmgr_evidence_type" NEXT="block_assmgr_resource_type">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="folder_id"/>
+        <FIELD NAME="folder_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="folder_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="candidate_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_folder_name"/>
+        <KEY NAME="unique_folder_name" TYPE="unique" FIELDS="candidate_id, name, folder_id" PREVIOUS="primary" NEXT="valid_folder_folder"/>
+        <KEY NAME="valid_folder_folder" TYPE="foreign" FIELDS="folder_id" REFTABLE="block_assmgr_folder" REFFIELDS="id" PREVIOUS="unique_folder_name" NEXT="valid_folder_user"/>
+        <KEY NAME="valid_folder_user" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="valid_folder_folder"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_resource_type" COMMENT="changeme" PREVIOUS="block_assmgr_folder" NEXT="block_assmgr_grade_cat_desc">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_resource_type_name"/>
+        <KEY NAME="unique_resource_type_name" TYPE="unique" FIELDS="name" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_grade_cat_desc" COMMENT="The description field for a grade category." PREVIOUS="block_assmgr_resource_type" NEXT="block_assmgr_evidence">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="grade_category_id"/>
+        <FIELD NAME="grade_category_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The foreign key reference to the grade cateogry." PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="The description of the grade cateogry." PREVIOUS="grade_category_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="grade_category_id_fk"/>
+        <KEY NAME="grade_category_id_fk" TYPE="foreign-unique" FIELDS="grade_category_id" REFTABLE="grade_categories" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_evidence" COMMENT="This table hold information pertain to evidence." PREVIOUS="block_assmgr_grade_cat_desc" NEXT="block_assmgr_confirmation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="folder_id"/>
+        <FIELD NAME="folder_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The id of the folder in which this evidence resides" PREVIOUS="description" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The user whose portfolio this evidence will go into" PREVIOUS="folder_id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The person user id of the user who created this piece of evidence" PREVIOUS="candidate_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_evidence_user"/>
+        <KEY NAME="valid_evidence_user" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_evidence_folder"/>
+        <KEY NAME="valid_evidence_folder" TYPE="foreign" FIELDS="folder_id" REFTABLE="block_assmgr_folder" REFFIELDS="id" PREVIOUS="valid_evidence_user" NEXT="valid_evidence_creator"/>
+        <KEY NAME="valid_evidence_creator" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="valid_evidence_folder" NEXT="unique_evidence_name_user"/>
+        <KEY NAME="unique_evidence_name_user" TYPE="unique" FIELDS="name, candidate_id" PREVIOUS="valid_evidence_creator"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_confirmation" COMMENT="changeme" PREVIOUS="block_assmgr_evidence" NEXT="block_assmgr_resource">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="evidence_id"/>
+        <FIELD NAME="evidence_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="evidence_id" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="feedback"/>
+        <FIELD NAME="feedback" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="status" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="feedback" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_confirmation_user"/>
+        <KEY NAME="valid_confirmation_user" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_evidence"/>
+        <KEY NAME="valid_evidence" TYPE="foreign-unique" FIELDS="evidence_id" REFTABLE="block_assmgr_evidence" REFFIELDS="id" PREVIOUS="valid_confirmation_user"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_resource" COMMENT="Resource table for storing composite foreign key record for resource plugin." PREVIOUS="block_assmgr_confirmation" NEXT="block_assmgr_portfolio">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="evidence_id"/>
+        <FIELD NAME="evidence_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="resource_type_id"/>
+        <FIELD NAME="resource_type_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="evidence_id" NEXT="tablename"/>
+        <FIELD NAME="tablename" TYPE="char" LENGTH="28" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="The name of the table the record_id references." PREVIOUS="resource_type_id" NEXT="record_id"/>
+        <FIELD NAME="record_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The foreign key id of the record specific to tablename." PREVIOUS="tablename" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="record_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_evidence_resource_type"/>
+        <KEY NAME="valid_evidence_resource_type" TYPE="foreign" FIELDS="resource_type_id" REFTABLE="block_assmgr_resource_type" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_evidence"/>
+        <KEY NAME="valid_evidence" TYPE="foreign-unique" FIELDS="evidence_id" REFTABLE="block_assmgr_evidence" REFFIELDS="id" PREVIOUS="valid_evidence_resource_type" NEXT="unique_reference"/>
+        <KEY NAME="unique_reference" TYPE="unique" FIELDS="tablename, record_id" PREVIOUS="valid_evidence"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_portfolio" COMMENT="An assessment portfolio" PREVIOUS="block_assmgr_resource" NEXT="block_assmgr_lock">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="candidate_id" NEXT="needsassess"/>
+        <FIELD NAME="needsassess" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="course_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="needsassess" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_course_portfolio"/>
+        <KEY NAME="unique_course_portfolio" TYPE="unique" FIELDS="candidate_id, course_id" PREVIOUS="primary" NEXT="valid_portfolio_user"/>
+        <KEY NAME="valid_portfolio_user" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="unique_course_portfolio" NEXT="valid_portfolio_course"/>
+        <KEY NAME="valid_portfolio_course" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="valid_portfolio_user"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_lock" COMMENT="Locks protfolios so no one else may enter them" PREVIOUS="block_assmgr_portfolio" NEXT="block_assmgr_submission">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="portfolio_id"/>
+        <FIELD NAME="portfolio_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="portfolio_id" NEXT="expire"/>
+        <FIELD NAME="expire" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="expire" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_lock_user"/>
+        <KEY NAME="valid_lock_user" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_unique_lock_portfolio"/>
+        <KEY NAME="valid_unique_lock_portfolio" TYPE="foreign-unique" FIELDS="portfolio_id" REFTABLE="block_assmgr_portfolio" REFFIELDS="id" PREVIOUS="valid_lock_user"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_submission" COMMENT="The submissions table, that holds the relationship between evidence and portfolios." PREVIOUS="block_assmgr_lock" NEXT="block_assmgr_sub_evid_type">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="portfolio_id"/>
+        <FIELD NAME="portfolio_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="evidence_id"/>
+        <FIELD NAME="evidence_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="portfolio_id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="evidence_id" NEXT="hidden"/>
+        <FIELD NAME="hidden" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="synchronise"/>
+        <FIELD NAME="synchronise" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="hidden" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="synchronise" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_evidence_submission"/>
+        <KEY NAME="unique_evidence_submission" TYPE="unique" FIELDS="portfolio_id, evidence_id" PREVIOUS="primary" NEXT="valid_submission_portfolio"/>
+        <KEY NAME="valid_submission_portfolio" TYPE="foreign" FIELDS="portfolio_id" REFTABLE="block_assmgr_portfolio" REFFIELDS="id" PREVIOUS="unique_evidence_submission" NEXT="valid_submission_evidence"/>
+        <KEY NAME="valid_submission_evidence" TYPE="foreign" FIELDS="evidence_id" REFTABLE="block_assmgr_evidence" REFFIELDS="id" PREVIOUS="valid_submission_portfolio" NEXT="valid_submission_user"/>
+        <KEY NAME="valid_submission_user" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="valid_submission_evidence"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_sub_evid_type" COMMENT="changeme" PREVIOUS="block_assmgr_submission" NEXT="block_assmgr_claim">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="submission_id"/>
+        <FIELD NAME="submission_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="evidence_type_id"/>
+        <FIELD NAME="evidence_type_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="submission_id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="evidence_type_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="unique_evidence_submission"/>
+        <KEY NAME="unique_evidence_submission" TYPE="unique" FIELDS="submission_id, evidence_type_id, creator_id" PREVIOUS="primary" NEXT="valid_sub_evid_type_submission"/>
+        <KEY NAME="valid_sub_evid_type_submission" TYPE="foreign" FIELDS="submission_id" REFTABLE="block_assmgr_submission" REFFIELDS="id" PREVIOUS="unique_evidence_submission" NEXT="valid_sub_evid_type_evidence_type"/>
+        <KEY NAME="valid_sub_evid_type_evidence_type" TYPE="foreign" FIELDS="evidence_type_id" REFTABLE="block_assmgr_evidence_type" REFFIELDS="id" PREVIOUS="valid_sub_evid_type_submission" NEXT="valid_sub_evid_type_user"/>
+        <KEY NAME="valid_sub_evid_type_user" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="valid_sub_evid_type_evidence_type"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_claim" COMMENT="holds details of a users outcome claims" PREVIOUS="block_assmgr_sub_evid_type" NEXT="block_assmgr_grade">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="submission_id"/>
+        <FIELD NAME="submission_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="outcome_id"/>
+        <FIELD NAME="outcome_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="submission_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="outcome_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="valid_claim_submission"/>
+        <KEY NAME="valid_claim_submission" TYPE="foreign" FIELDS="submission_id" REFTABLE="block_assmgr_submission" REFFIELDS="id" PREVIOUS="primary" NEXT="valid_claim_grade_outcome"/>
+        <KEY NAME="valid_claim_grade_outcome" TYPE="foreign" FIELDS="outcome_id" REFTABLE="grade_outcomes" REFFIELDS="id" PREVIOUS="valid_claim_submission" NEXT="unique_pairing"/>
+        <KEY NAME="unique_pairing" TYPE="unique" FIELDS="submission_id, outcome_id" PREVIOUS="valid_claim_grade_outcome"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_grade" COMMENT="The submissions grades." PREVIOUS="block_assmgr_claim" NEXT="block_assmgr_feedback">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="submission_id"/>
+        <FIELD NAME="submission_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="outcome_id"/>
+        <FIELD NAME="outcome_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="submission_id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="outcome_id" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The array index of the scale item." PREVIOUS="creator_id" NEXT="feedback"/>
+        <FIELD NAME="feedback" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="grade" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="feedback" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="submission_id_fk"/>
+        <KEY NAME="submission_id_fk" TYPE="foreign" FIELDS="submission_id" REFTABLE="block_assmgr_submission" REFFIELDS="id" PREVIOUS="primary" NEXT="outcome_id_fk"/>
+        <KEY NAME="outcome_id_fk" TYPE="foreign" FIELDS="outcome_id" REFTABLE="grade_outcomes" REFFIELDS="id" PREVIOUS="submission_id_fk" NEXT="creator_id_fk"/>
+        <KEY NAME="creator_id_fk" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="outcome_id_fk" NEXT="singlegrade"/>
+        <KEY NAME="singlegrade" TYPE="unique" FIELDS="submission_id, outcome_id" PREVIOUS="creator_id_fk"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_feedback" COMMENT="Submission Feedback table" PREVIOUS="block_assmgr_grade" NEXT="block_assmgr_verification">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="submission_id"/>
+        <FIELD NAME="submission_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="The user id of the person who added this feedback" PREVIOUS="submission_id" NEXT="filename"/>
+        <FIELD NAME="filename" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="filename" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="submission_id_fk"/>
+        <KEY NAME="submission_id_fk" TYPE="foreign" FIELDS="submission_id" REFTABLE="block_assmgr_submission" REFFIELDS="id" PREVIOUS="primary" NEXT="creator_id_fk"/>
+        <KEY NAME="creator_id_fk" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="submission_id_fk"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_verification" COMMENT="The IV schedule" PREVIOUS="block_assmgr_feedback" NEXT="block_assmgr_verify_form">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="verifier_id"/>
+        <FIELD NAME="verifier_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="category_id"/>
+        <FIELD NAME="category_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="verifier_id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="category_id" NEXT="assessor_id"/>
+        <FIELD NAME="assessor_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="course_id" NEXT="complete"/>
+        <FIELD NAME="complete" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="assessor_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="complete" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="verifier_id_fk"/>
+        <KEY NAME="verifier_id_fk" TYPE="foreign" FIELDS="verifier_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="category_id_fk"/>
+        <KEY NAME="category_id_fk" TYPE="foreign" FIELDS="category_id" REFTABLE="course_categories" REFFIELDS="id" PREVIOUS="verifier_id_fk" NEXT="course_id_fk"/>
+        <KEY NAME="course_id_fk" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="category_id_fk" NEXT="assessor_id_fk"/>
+        <KEY NAME="assessor_id_fk" TYPE="foreign" FIELDS="assessor_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="course_id_fk"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_verify_form" COMMENT="Individual verification records" PREVIOUS="block_assmgr_verification" NEXT="block_assmgr_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="verification_id"/>
+        <FIELD NAME="verification_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="portfolio_id"/>
+        <FIELD NAME="portfolio_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="verification_id" NEXT="submission_id"/>
+        <FIELD NAME="submission_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="portfolio_id" NEXT="accurate"/>
+        <FIELD NAME="accurate" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="submission_id" NEXT="accurate_comment"/>
+        <FIELD NAME="accurate_comment" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="accurate" NEXT="constructive"/>
+        <FIELD NAME="constructive" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="accurate_comment" NEXT="constructive_comment"/>
+        <FIELD NAME="constructive_comment" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="constructive" NEXT="needs_amending"/>
+        <FIELD NAME="needs_amending" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="constructive_comment" NEXT="amendment_comment"/>
+        <FIELD NAME="amendment_comment" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="needs_amending" NEXT="actions"/>
+        <FIELD NAME="actions" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="amendment_comment" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="actions" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="portfolio_id_fk"/>
+        <KEY NAME="portfolio_id_fk" TYPE="foreign" FIELDS="portfolio_id" REFTABLE="block_assmgr_portfolio" REFFIELDS="id" PREVIOUS="primary" NEXT="submission_id_fk"/>
+        <KEY NAME="submission_id_fk" TYPE="foreign" FIELDS="submission_id" REFTABLE="block_assmgr_submission" REFFIELDS="id" PREVIOUS="portfolio_id_fk" NEXT="verification_id_fk"/>
+        <KEY NAME="verification_id_fk" TYPE="foreign" FIELDS="verification_id" REFTABLE="block_assmgr_verification" REFFIELDS="id" PREVIOUS="submission_id_fk"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_log" COMMENT="holds log information" PREVIOUS="block_assmgr_verify_form" NEXT="block_assmgr_calendar_event">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="candidate_id"/>
+        <FIELD NAME="candidate_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="candidate_id" NEXT="type"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="course_id" NEXT="entity"/>
+        <FIELD NAME="entity" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="type" NEXT="record_id"/>
+        <FIELD NAME="record_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="entity" NEXT="attribute"/>
+        <FIELD NAME="attribute" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="record_id" NEXT="old_value"/>
+        <FIELD NAME="old_value" TYPE="text" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="attribute" NEXT="new_value"/>
+        <FIELD NAME="new_value" TYPE="text" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="old_value" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="new_value" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="creator_id_fk"/>
+        <KEY NAME="creator_id_fk" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="candidate_id_fk"/>
+        <KEY NAME="candidate_id_fk" TYPE="foreign" FIELDS="candidate_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="creator_id_fk" NEXT="course_id_fk"/>
+        <KEY NAME="course_id_fk" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="candidate_id_fk"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_assmgr_calendar_event" COMMENT="Holds information on assessment manager events in mdl_event" PREVIOUS="block_assmgr_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="event_id"/>
+        <FIELD NAME="event_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="event_id" NEXT="creator_id"/>
+        <FIELD NAME="creator_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="course_id" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="creator_id" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="event_id_fk"/>
+        <KEY NAME="event_id_fk" TYPE="foreign-unique" FIELDS="event_id" REFTABLE="event" REFFIELDS="id" PREVIOUS="primary" NEXT="course_id_fk"/>
+        <KEY NAME="course_id_fk" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id" PREVIOUS="event_id_fk" NEXT="eventcreator_user_fk"/>
+        <KEY NAME="eventcreator_user_fk" TYPE="foreign" FIELDS="creator_id" REFTABLE="user" REFFIELDS="id" PREVIOUS="course_id_fk"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert block_assmgr_evidence_type" TYPE="insert" TABLE="block_assmgr_evidence_type" COMMENT="Initial insert of records on table block_assmgr_evidence_type">
+      <SENTENCES>
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('observation',          'observationdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('productevidence',      'productevidencedesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('questioning',          'questioningdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('simulationassignment', 'simulationassignmentdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('electronicrecording',  'electronicrecordingdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('witnessstatement',     'witnessstatementdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('apaapl',               'apaapldesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('personalstatement',    'personalstatementdesc', '1262304000', '1262304000')" />
+        <SENTENCE TEXT="(name, description, timemodified, timecreated) VALUES ('other',                'otherdesc', '1262304000', '1262304000')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>

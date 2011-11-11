@@ -1,0 +1,2 @@
+<b><?php echo get_string('myevidence', 'block_assmgr'); ?></b>
+<p><?php echo get_string('myevidencehelp', 'block_assmgr'); ?></p>

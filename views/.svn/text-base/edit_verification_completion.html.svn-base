@@ -1,0 +1,14 @@
+<h2 id="verificationcompletion" class="headingblock header">
+    <?php
+    echo get_string('verificationcompletion', 'block_assmgr');
+    helpbutton('verificationcompletion', get_string('verificationcompletion', 'block_assmgr'), 'block_assmgr');
+    ?>
+</h2>
+<div id="verificationcompletion_container" class="box generalbox toggledcontainer">
+    <fieldset class="clearfix">
+        <legend class="ftoggler">
+            <?php echo get_string('verificationcompletion', 'block_assmgr') ?>
+        </legend>
+        <?php $verificationcompleteform->display(); ?>
+    </fieldset>
+</div>

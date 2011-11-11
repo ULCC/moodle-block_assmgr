@@ -1,0 +1,27 @@
+<?php
+// subscribe this form to the unsaved data checker
+/*
+$formsaveargs = array('form' => 'mform1', 'tablename' => get_string('portfoliofinalgrade', 'block_assmgr'));
+$unsavedmodule = array(
+    'name'      => 'unsaved_data',
+    'fullpath'  => '/blocks/assmgr/views/js/unsaved_data.js',
+    'requires'  => array()
+);
+$PAGE->requires->js_init_code(js_writer::set_variable('M.block_assmgr_vars.cfgwwwroot', $CFG->wwwroot));
+$PAGE->requires->js_init_code(js_writer::set_variable('M.block_assmgr_vars.courseid', $course_id));
+$PAGE->requires->js_init_code(js_writer::set_variable('M.block_assmgr_vars.portassesssaved', get_string('portassesssaved', 'block_assmgr')));
+$PAGE->requires->js_init_code(js_writer::set_variable('M.block_assmgr_vars.portfoliocommentrequired', get_string('portfoliocommentrequired', 'block_assmgr')));
+$PAGE->requires->js_init_call('M.blocks_assmgr_unsaved_data.checker.subscribe_to_form', $formsaveargs, true, $unsavedmodule);
+*/
+?>
+<h2 id="portfolioassessment" class="headingblock header">
+    <?php
+    echo get_string('portfolioassessment', 'block_assmgr');
+
+    $helpstr = $access_isassessor ? 'portfolioassessmentassessorhelp' : 'portfolioassessmenthelp';
+    //helpbutton($helpstr, get_string('portfolioassessment', 'block_assmgr'), 'block_assmgr');
+    ?>
+</h2>
+<div id="portfolioassessment_container" class="box generalbox toggledcontainer">
+    <?php $portassessform->display(); ?>
+</div>
