@@ -21,7 +21,7 @@ test2  =  document.getElementById('portfolioassessment_container');
     var maintbwidth = 911;
     console.log(jQuery('new_activitynametable').offsetHeight);
 
-
+/*
     jQuery(test).fixedTable({
         width: maintbwidth,
         height: maintbheight,
@@ -43,7 +43,7 @@ test2  =  document.getElementById('portfolioassessment_container');
         // tds' in fixed column background color while hover. 
         //fixedColumnhovercolor:"#99CCFF"  
     });
-
+*/
 //});
 
 
