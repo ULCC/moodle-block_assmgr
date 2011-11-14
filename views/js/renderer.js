@@ -2,30 +2,21 @@
 
 
 jQuery(document).ready(function() {
-	
-	
 
-
-test  =  document.getElementById('new_activitynametable');
-test2  =  document.getElementById('portfolioassessment_container');
-
-//makes the fixxed header table work
-//$(test).fixedHeaderTable({ height: '200', width: '200'});
-
-
-//test.each(function() {    
-
+	test  =  document.getElementById('new_activitynametable');
 
     var Id = 'submissions_table_container';
     var maintbheight = 555;
     var maintbwidth = 911;
-    console.log(jQuery('new_activitynametable').offsetHeight);
 
-/*
     jQuery(test).fixedTable({
         width: maintbwidth,
         height: maintbheight,
         fixedColumns: 1,
+        // header style
+        classHeader: "fixedHead",
+        // footer style        
+        classFooter: "fixedFoot",
 
 
         // fixed column on the left        
@@ -43,10 +34,8 @@ test2  =  document.getElementById('portfolioassessment_container');
         // tds' in fixed column background color while hover. 
         //fixedColumnhovercolor:"#99CCFF"  
     });
-*/
-//});
 
-
+    console.log(jQuery('new_activitynametable').offsetHeight);
 });
 
 M.render_assmgr_course_activities = {};

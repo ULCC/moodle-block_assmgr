@@ -74,6 +74,12 @@ $(document).ready(function() {
             "border-collapse": $(tbl).css("border-collapse"),
             "padding": "0"
         });
+        
+        
+        $("." + options.classColumn + " ." + options.classHeader, layout).css({
+        	"border-bottom" : "0 none"
+        })
+        
 
         $("." + options.classColumn, layout).width(options.fixedColumnWidth);
         $("." + options.classColumn, layout).height(options.height);
@@ -124,7 +130,7 @@ $(document).ready(function() {
         // Apply the scroll handlers
         $(".fixedContainer > .fixedTable", layout).scroll(function() { handleScroll(mainid, options); });
         //the handleScroll() method is defined near the bottom of this file.
-
+        
         //$.fn.fixedTable.adjustSizes(mainid);
         adjustSizes(options);
         return tbl;
@@ -251,10 +257,28 @@ $(document).ready(function() {
             else {
                 maxh = fixedh;
             }
+            
             //$(this).height(contenth);
             $(this).children("td").height(maxh);
             $("#" + Id + " .fixedContainer .fixedTable table tbody tr").eq(i).children("td").height(maxh);
         });
+
+     // get the height of all header coulmns and if the fixed columns are smaller set them to the largest size 
+        $("#" + Id + " .fixedContainer  ." + options.classHeader + " table tbody tr ").each(function(i) {
+            var maxh = 0;
+            var fixedh = $(this).height();
+            var fixedColHeight;
+            $("#" + Id + " .fixedColumn  ." + options.classHeader + " table tbody tr ").each(function(r) {
+            	fixedColHeight = $(this).height();
+            });
+            
+            if (fixedColHeight < fixedh) {
+            	$("#" + Id + " .fixedColumn  ." + options.classHeader + " table tbody tr ").eq(i).children("td").height(fixedh-4);
+            }
+            
+        });
+        
+        
 
         //adjust the cell widths so the header/footer and table cells line up
         var htbale = $("#" + Id + " .fixedContainer ." + options.classHeader + " table");
@@ -372,5 +396,6 @@ $(document).ready(function() {
             });
         }
     }
+
 
 })(jQuery);
