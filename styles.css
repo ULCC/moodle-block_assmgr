@@ -629,7 +629,18 @@ Assmgr 2.5 specific styles
 
 
 
-
+.fixedTable table {
+	margin : 0em;
+	}
+	
+.fixedHead table {
+	margin : 0em;
+	}
+	
+#submissions_table_container	{
+	min-height	:	500px;
+	}
+	
 
 
 
