@@ -275,7 +275,6 @@ $(document).ready(function() {
             if (fixedColHeight < fixedh) {
             	$("#" + Id + " .fixedColumn  ." + options.classHeader + " table tbody tr ").eq(i).children("td").height(fixedh-4);
             }
-            
         });
         
         

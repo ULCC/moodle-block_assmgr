@@ -69,7 +69,7 @@ class block_assmgr_renderer extends plugin_renderer_base {
 			foreach($outcomes	as $o) {
 				$table->head[$o->id]					= 		new html_table_cell();
 				
-				$currentgradeitem_id									=	$courseactivities->get_candidate_course_outcome_grade($o->id);
+				$currentgradeitem_id					=	$courseactivities->get_candidate_course_outcome_grade($o->id);
 				$table->head[$o->id]->text				=   limit_length($o->shortname, 20, $o->fullname)." ".$this->get_outcome_header($o->id,$currentgradeitem_id,$is_assessor);//
 			}
 			

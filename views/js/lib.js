@@ -131,6 +131,14 @@ function toggle_container(elem, from, to) {
 	// get the container to animate
 	var container = Dom.get(elem.id+'_container');
 	
+	containerheight	=	get_height(container);
+	
+	var jconheight	=	jQuery(container).height();
+	
+	console.log('container ');
+	console.log(containerheight);
+	console.log(jconheight);
+	
 	if(to == 0) {
 		
 		// fix the height of the page so the animation isn't screwy

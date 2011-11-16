@@ -81,6 +81,10 @@ $allowedcourses = get_user_courses_bycap(
 );
 
 
+if (empty($allowedcourses) && is_siteadmin($USER)) {
+	$course			=	$dbc->get_course($course_id);
+	$allowedcourses	=	array($course);
+}
 
 // if there is a specific course then check the user permissions against that course
 if(!empty($course_id)) {
