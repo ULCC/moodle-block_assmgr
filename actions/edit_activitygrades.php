@@ -12,7 +12,7 @@
 
 require_once('../../../config.php');
 
-global $USER, $CFG, $SESSION, $PARSER, $OUTPUT;
+global $USER, $CFG, $SESSION, $PARSER, $OUTPUT, $PAGE;
 
 // Meta includes
 require_once($CFG->dirroot.'/blocks/assmgr/actions_includes.php');
@@ -24,6 +24,9 @@ require_once($CFG->dirroot.'/blocks/assmgr/classes/assmgr_formslib.php');
 
 require_once($CFG->dirroot.'/blocks/assmgr/classes/forms/edit_activitygrade_mform.php');
 
+$context = (!empty($course_id)) ? get_context_instance(CONTEXT_COURSE, $course_id) : get_context_instance(CONTEXT_SYSTEM);
+
+$PAGE->set_context($context);
 
 // get the required params
 $course_id 			= 	$PARSER->required_param('course_id', PARAM_INT);

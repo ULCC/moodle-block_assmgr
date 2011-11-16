@@ -32,7 +32,9 @@ if (!$access_isassessor) {
 $course_id    = $PARSER->required_param('course_id',    PARAM_INT);
 $candidate_id = $PARSER->required_param('candidate_id', PARAM_INT);
 
-$coursecontext = get_context_instance(CONTEXT_COURSE, $course_id);
+$context = (!empty($course_id)) ? get_context_instance(CONTEXT_COURSE, $course_id) : get_context_instance(CONTEXT_SYSTEM);
+
+$PAGE->set_context($context);
 
 $PAGE->set_context($coursecontext);
 
