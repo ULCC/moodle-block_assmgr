@@ -423,6 +423,7 @@ $string['notassessed'] = 'Not Assessed';
 $string['notenrolled'] = 'Not Enrolled';
 $string['nothingtodisplay'] = 'Nothing to display';
 $string['notmysubmission'] = 'the submission was made by someone else';
+$string['nooutcome']	=	'No Outcome';
 $string['notstarted'] = 'Not Started';
 $string['notsubmitted'] = 'Not Submitted';
 $string['notunique'] = 'A record with that {$a} already exists';

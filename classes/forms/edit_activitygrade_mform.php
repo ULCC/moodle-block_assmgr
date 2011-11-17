@@ -103,7 +103,7 @@ class edit_activitygrade_mform extends moodleform {
         	//get the scale for the outcomes
         	$scale	=	$this->dbc->get_scale($o->scaleid);
         	$options	=	array();
-        	
+        	$options[-2]	=	get_string('nooutcome','block_ilp');
         	foreach ($scale->load_items() as $idx => $item)	{
         		$options[$idx+1]	=	$item;	
         	}
@@ -160,48 +160,50 @@ class edit_activitygrade_mform extends moodleform {
         	
         	$fieldvalue		=	$data->$fieldname;
         	
-        	//as the grades name is the only real link back to outcome provided by (the data returned from) grade_get_grades function we need
-			//to query the grade_items table to retrieve the itemnumber of the outcome for this activity (if it exists) 
-			//we can then use this information to get the grade from the data grade_get_grades returns 
-        	$outcome_grade_item		=	$this->dbc->get_activity_outcome($this->course_id,$module->name,$this->instance_id,$o->id);
-        	
-        	//I am not sure if setting the itemnumber to 0 will work for the outcomes as there is usually more than one.
-        	//we may have to create itemnumbers manually
-        	$itemnumber				=	($outcome_grade_item)	?	$outcome_grade_item->itemnumber	:	$newitemnumber;
-        	
-        	if (!empty($outcome_grade_item))	{ 
-        	      	//not sure if this will work 
-        			$grades[$outcome_grade_item->itemnumber]	=	$fieldvalue;
-        	} else {
-        		
-        		$scale				=	$this->dbc->get_scale($o->scaleid);
-        		
-        		//create the grade item
-        		$grade				=	new grade_item();
-        		$grade->courseid	=	$this->course_id;
-        		$grade->itemname	=	$o->shortname;
-        		$grade->itemtype	=	'mod';
-        		$grade->itemmodule	=	$module->name;
-        		$grade->iteminstance	=	$this->instance_id;
-        		$grade->itemnumber		=	$itemnumber;
-        		$grade->scaleid			=	$o->scaleid;
-        		$grade->gradetype 		= GRADE_TYPE_SCALE;
-        		$grade->outcomeid		=	$o->id;
-
-        		//insert the grade item
-        		$grade->insert($source);
-        		
-        		
-        		// we can now set the outcome grade 
-        		$grades[$itemnumber]	=	$fieldvalue;
+        	if ($fieldvalue != -2) {
+	        	//as the grades name is the only real link back to outcome provided by (the data returned from) grade_get_grades function we need
+				//to query the grade_items table to retrieve the itemnumber of the outcome for this activity (if it exists) 
+				//we can then use this information to get the grade from the data grade_get_grades returns 
+	        	$outcome_grade_item		=	$this->dbc->get_activity_outcome($this->course_id,$module->name,$this->instance_id,$o->id);
+	        	
+	        	//I am not sure if setting the itemnumber to 0 will work for the outcomes as there is usually more than one.
+	        	//we may have to create itemnumbers manually
+	        	$itemnumber				=	($outcome_grade_item)	?	$outcome_grade_item->itemnumber	:	$newitemnumber;
+	        	
+	        	if (!empty($outcome_grade_item))	{ 
+	        	      	//not sure if this will work 
+	        			$grades[$outcome_grade_item->itemnumber]	=	$fieldvalue;
+	        	} else {
+	        		
+	        		$scale				=	$this->dbc->get_scale($o->scaleid);
+	        		
+	        		//create the grade item
+	        		$grade				=	new grade_item();
+	        		$grade->courseid	=	$this->course_id;
+	        		$grade->itemname	=	$o->shortname;
+	        		$grade->itemtype	=	'mod';
+	        		$grade->itemmodule	=	$module->name;
+	        		$grade->iteminstance	=	$this->instance_id;
+	        		$grade->itemnumber		=	$itemnumber;
+	        		$grade->scaleid			=	$o->scaleid;
+	        		$grade->gradetype 		= GRADE_TYPE_SCALE;
+	        		$grade->outcomeid		=	$o->id;
+	
+	        		//insert the grade item
+	        		$grade->insert($source);
+	        		
+	        		
+	        		// we can now set the outcome grade 
+	        		$grades[$itemnumber]	=	$fieldvalue;
+	        	}
+	
+				//we need to set the new itemnumber to the value of the current itemnumber and then increment it 
+				//this will make sure that any new outcome that we are adding will keep the correct number sequence
+				//in the grade_items table.
+	        	if (!empty($outcome_grade_item->itemnumber))	$newitemnumber	=	$itemnumber;
+	        	
+	        	$newitemnumber++;
         	}
-
-			//we need to set the new itemnumber to the value of the current itemnumber and then increment it 
-			//this will make sure that any new outcome that we are adding will keep the correct number sequence
-			//in the grade_items table.
-        	if (!empty($outcome_grade_item->itemnumber))	$newitemnumber	=	$itemnumber;
-        	
-        	$newitemnumber++;
         }
         
         if (!empty($grades)) grade_update_outcomes($source,$this->course_id,"mod",$module->name,$this->instance_id,$this->candidate_id,$grades);
