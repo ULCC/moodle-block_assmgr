@@ -28,7 +28,7 @@ $renderer			=	$PAGE->get_renderer('block_assmgr');
 //create a class holding the activites that are in the current course
 $courseactiviites	=	new assmgr_course_activities($course_id,$candidate_id);
 
-$courseactiviites->is_assessor	=	true;
+$courseactiviites->is_assessor	=	(isset($access_isassessor)) ? $access_isassessor : false;
 
 $activities 		=	$courseactiviites->get_course_activities();
 $outcomes 			=	$courseactiviites->get_course_outcomes();
