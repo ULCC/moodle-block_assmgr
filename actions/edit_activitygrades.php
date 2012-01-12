@@ -36,9 +36,9 @@ $instance_id		=	$PARSER->required_param('instance_id', PARAM_INT);
 
 // instantiate the db
 $dbc = new assmgr_db();
-/*
+
 // you must be either a candidate or an assessor to edit a portfolio
-if($access_isassessor) {
+if(empty($access_isassessor)) {
     print_error('noeditportfoliopermission','block_assmgr');
 }
 
