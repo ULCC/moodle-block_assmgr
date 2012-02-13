@@ -1,4 +1,0 @@
-<?php
-// display the from
-$verifyform->display();
-?>
