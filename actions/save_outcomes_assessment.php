@@ -62,8 +62,8 @@ if(!empty($outcomes)) {
 		//we can then use this information to get the grade from the data grade_get_grades returns 
         $outcome_grade_item		=	$dbc->get_overall_course_outcome($course_id,$outcome_id);
     	
-        if (!empty($outcome_grade_item))	{
-        	//we need to create the grade item
+        if (empty($outcome_grade_item))	{
+        	//we need to create the grade item should not get to this state if the sub course module has been used
         	
         	$outcome	=	$dbc->get_outcome($outcome_id);
         	
