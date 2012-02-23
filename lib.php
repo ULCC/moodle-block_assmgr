@@ -1032,3 +1032,285 @@ $script = "";
         
     }
 }
+
+/**
+ * Submit new or update grade; update/create grade_item definition. Grade must have userid specified,
+ * rawgrade and feedback with format are optional. rawgrade NULL means 'Not graded', missing property
+ * or key means do not change existing.
+ *
+ * Only following grade item properties can be changed 'itemname', 'idnumber', 'gradetype', 'grademax',
+ * 'grademin', 'scaleid', 'multfactor', 'plusfactor', 'deleted' and 'hidden'. 'reset' means delete all current grades including locked ones.
+ *
+ * Manual, course or category items can not be updated by this function.
+ * @access public
+ * @global object
+ * @global object
+ * @global object
+ * @param string $source source of the grade such as 'mod/assignment'
+ * @param int $courseid id of course
+ * @param string $itemtype type of grade item - mod, block
+ * @param string $itemmodule more specific then $itemtype - assignment, forum, etc.; maybe NULL for some item types
+ * @param int $iteminstance instance it of graded subject
+ * @param int $itemnumber most probably 0, modules can use other numbers when having more than one grades for each user
+ * @param mixed $grades grade (object, array) or several grades (arrays of arrays or objects), NULL if updating grade_item definition only
+ * @param mixed $itemdetails object or array describing the grading item, NULL if no change
+ */
+function assmgr_grade_update($source, $courseid, $itemtype, $itemmodule, $iteminstance, $itemnumber, $grades=NULL, $itemdetails=NULL) {
+    global $USER, $CFG, $DB;
+
+    /** Include essential files */
+    require_once($CFG->libdir . '/grade/constants.php');
+    require_once($CFG->libdir . '/grade/grade_category.php');
+    require_once($CFG->libdir . '/grade/grade_grade.php');
+    require_once($CFG->libdir . '/grade/grade_scale.php');
+    require_once($CFG->libdir . '/grade/grade_outcome.php');
+
+    //
+    require_once($CFG->dirroot . '/blocks/assmgr/classes/assmgr_grade_item.php');
+
+
+    // only following grade_item properties can be changed in this function
+    $allowed = array('itemname', 'idnumber', 'gradetype', 'grademax', 'grademin', 'scaleid', 'multfactor', 'plusfactor', 'deleted', 'hidden');
+    // list of 10,5 numeric fields
+    $floats  = array('grademin', 'grademax', 'multfactor', 'plusfactor');
+
+    // grade item identification
+    $params = compact('courseid', 'itemtype', 'itemmodule', 'iteminstance', 'itemnumber');
+
+    if (is_null($courseid) or is_null($itemtype)) {
+        debugging('Missing courseid or itemtype');
+        return GRADE_UPDATE_FAILED;
+    }
+
+
+    if (!$grade_items = assmgr_grade_item::fetch_all($params)) {
+        // create a new one
+        $grade_item = false;
+
+    } else if (count($grade_items) == 1){
+        $grade_item = reset($grade_items);
+        unset($grade_items); //release memory
+
+    } else {
+        debugging('Found more than one grade item');
+        return GRADE_UPDATE_MULTIPLE;
+    }
+
+    if (!empty($itemdetails['deleted'])) {
+        if ($grade_item) {
+            if ($grade_item->delete($source)) {
+                return GRADE_UPDATE_OK;
+            } else {
+                return GRADE_UPDATE_FAILED;
+            }
+        }
+        return GRADE_UPDATE_OK;
+    }
+
+
+
+    /// Create or update the grade_item if needed
+
+    if (!$grade_item) {
+        if ($itemdetails) {
+            $itemdetails = (array)$itemdetails;
+
+            // grademin and grademax ignored when scale specified
+            if (array_key_exists('scaleid', $itemdetails)) {
+                if ($itemdetails['scaleid']) {
+                    unset($itemdetails['grademin']);
+                    unset($itemdetails['grademax']);
+                }
+            }
+
+            foreach ($itemdetails as $k=>$v) {
+                if (!in_array($k, $allowed)) {
+                    // ignore it
+                    continue;
+                }
+                if ($k == 'gradetype' and $v == GRADE_TYPE_NONE) {
+                    // no grade item needed!
+                    return GRADE_UPDATE_OK;
+                }
+                $params[$k] = $v;
+            }
+        }
+
+        $grade_item = new assmgr_grade_item($params);
+        $grade_item->insert();
+
+    } else {
+        if ($grade_item->is_locked()) {
+            // no notice() here, test returned value instead!
+            return GRADE_UPDATE_ITEM_LOCKED;
+        }
+
+        if ($itemdetails) {
+            $itemdetails = (array)$itemdetails;
+            $update = false;
+            foreach ($itemdetails as $k=>$v) {
+                if (!in_array($k, $allowed)) {
+                    // ignore it
+                    continue;
+                }
+                if (in_array($k, $floats)) {
+                    if (grade_floats_different($grade_item->{$k}, $v)) {
+                        $grade_item->{$k} = $v;
+                        $update = true;
+                    }
+
+                } else {
+                    if ($grade_item->{$k} != $v) {
+                        $grade_item->{$k} = $v;
+                        $update = true;
+                    }
+                }
+            }
+            if ($update) {
+                $grade_item->update();
+            }
+        }
+    }
+
+    /// reset grades if requested
+    if (!empty($itemdetails['reset'])) {
+        $grade_item->delete_all_grades('reset');
+        return GRADE_UPDATE_OK;
+    }
+
+    /// Some extra checks
+    // do we use grading?
+    if ($grade_item->gradetype == GRADE_TYPE_NONE) {
+        return GRADE_UPDATE_OK;
+    }
+
+    // no grade submitted
+    if (empty($grades)) {
+        return GRADE_UPDATE_OK;
+    }
+
+    /// Finally start processing of grades
+    if (is_object($grades)) {
+        $grades = array($grades->userid=>$grades);
+    } else {
+        if (array_key_exists('userid', $grades)) {
+            $grades = array($grades['userid']=>$grades);
+        }
+    }
+
+    /// normalize and verify grade array
+    foreach($grades as $k=>$g) {
+        if (!is_array($g)) {
+            $g = (array)$g;
+            $grades[$k] = $g;
+        }
+
+        if (empty($g['userid']) or $k != $g['userid']) {
+            debugging('Incorrect grade array index, must be user id! Grade ignored.');
+            unset($grades[$k]);
+        }
+    }
+
+    if (empty($grades)) {
+        return GRADE_UPDATE_FAILED;
+    }
+
+    $count = count($grades);
+    if ($count > 0 and $count < 200) {
+        list($uids, $params) = $DB->get_in_or_equal(array_keys($grades), SQL_PARAMS_NAMED, $start='uid');
+        $params['gid'] = $grade_item->id;
+        $sql = "SELECT * FROM {grade_grades} WHERE itemid = :gid AND userid $uids";
+
+    } else {
+        $sql = "SELECT * FROM {grade_grades} WHERE itemid = :gid";
+        $params = array('gid'=>$grade_item->id);
+    }
+
+    $rs = $DB->get_recordset_sql($sql, $params);
+
+    $failed = false;
+
+    while (count($grades) > 0) {
+        $grade_grade = null;
+        $grade       = null;
+
+        foreach ($rs as $gd) {
+
+            $userid = $gd->userid;
+            if (!isset($grades[$userid])) {
+                // this grade not requested, continue
+                continue;
+            }
+            // existing grade requested
+            $grade       = $grades[$userid];
+            $grade_grade = new grade_grade($gd, false);
+            unset($grades[$userid]);
+            break;
+        }
+
+
+
+        if (is_null($grade_grade)) {
+            if (count($grades) == 0) {
+                // no more grades to process
+                break;
+            }
+
+            $grade       = reset($grades);
+            $userid      = $grade['userid'];
+            $grade_grade = new grade_grade(array('itemid'=>$grade_item->id, 'userid'=>$userid), false);
+            $grade_grade->load_optional_fields(); // add feedback and info too
+            unset($grades[$userid]);
+        }
+
+        $rawgrade       = false;
+        $feedback       = false;
+        $feedbackformat = FORMAT_MOODLE;
+        $usermodified   = $USER->id;
+        $datesubmitted  = null;
+        $dategraded     = null;
+
+        if (array_key_exists('rawgrade', $grade)) {
+            $rawgrade = $grade['rawgrade'];
+        }
+
+        if (array_key_exists('feedback', $grade)) {
+            $feedback = $grade['feedback'];
+        }
+
+        if (array_key_exists('feedbackformat', $grade)) {
+            $feedbackformat = $grade['feedbackformat'];
+        }
+
+        if (array_key_exists('usermodified', $grade)) {
+            $usermodified = $grade['usermodified'];
+        }
+
+        if (array_key_exists('datesubmitted', $grade)) {
+            $datesubmitted = $grade['datesubmitted'];
+        }
+
+        if (array_key_exists('dategraded', $grade)) {
+            $dategraded = $grade['dategraded'];
+        }
+
+        // update or insert the grade
+        if (!$grade_item->update_raw_grade($userid, $rawgrade, $source, $feedback, $feedbackformat, $usermodified, $dategraded, $datesubmitted, $grade_grade)) {
+
+
+
+            $failed = true;
+        }
+
+    }
+
+    if ($rs) {
+        $rs->close();
+    }
+
+    if (!$failed) {
+        return GRADE_UPDATE_OK;
+    } else {
+        return GRADE_UPDATE_FAILED;
+    }
+}
