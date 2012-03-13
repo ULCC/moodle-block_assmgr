@@ -37,9 +37,9 @@ require_once($CFG->dirroot.'/blocks/assmgr/classes/forms/edit_portfolio_assessme
 $dbc = new assmgr_db();
 
 
-$PAGE->requires->js('/lib/yui/2.8.2/build/yahoo/yahoo-min.js');
-$PAGE->requires->js('/lib/yui/2.8.2/build/event/event-min.js');
-$PAGE->requires->js('/lib/yui/2.8.2/build/dom/dom-min.js');
+$PAGE->requires->js('/lib/yui/2.9.0/build/yahoo/yahoo-min.js');
+$PAGE->requires->js('/lib/yui/2.9.0/build/event/event-min.js');
+$PAGE->requires->js('/lib/yui/2.9.0/build/dom/dom-min.js');
 
 $candidate_id = $PARSER->required_param('candidate_id', PARAM_INT);
 $course_id = $PARSER->required_param('course_id', PARAM_INT);
